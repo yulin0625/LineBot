@@ -1,12 +1,11 @@
-line-bot-sdk
+line-bot-sdk==2.0.1
 flask==2.0.2
 pygraphviz==1.6
 Jinja2==3.0.3
 MarkupSafe==2.0.1
 Werkzeug==2.0.2
 click==8.0.3
-dataclasses-0.8
+dataclasses==0.8
 flask==2.0.2
 itsdangerous==2.0.1
 python-dotenv==0.19.2
-ine-bot-sdk-2.0.1
