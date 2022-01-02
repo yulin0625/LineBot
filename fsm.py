@@ -156,3 +156,153 @@ class TocMachine(GraphMachine):
     def on_enter_search5(self, event):
         reply_token = event.reply_token
         send_text_message(reply_token, "https://www.google.com/maps/search/%E9%BA%BB%E5%8F%A4%E8%8C%B6%E5%9D%8A/")    
+
+if __name__ == "__main__":
+    machine = TocMachine(
+        states=["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+        transitions=[
+            # drow lots
+            {
+                "trigger": "advance",
+                "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+                "dest": "draw",
+                "conditions": "is_going_to_draw",
+            },
+            # goto store
+            {
+                "trigger": "advance",
+                "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+                "dest": "store1",
+                "conditions": "is_going_to_store1",
+            },
+            {
+                "trigger": "advance",
+                "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+                "dest": "store2",
+                "conditions": "is_going_to_store2",
+            },
+            {
+                "trigger": "advance",
+                "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+                "dest": "store3",
+                "conditions": "is_going_to_store3",
+            },
+            {
+                "trigger": "advance",
+                "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+                "dest": "store4",
+                "conditions": "is_going_to_store4",
+            },
+            {
+                "trigger": "advance",
+                "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+                "dest": "store5",
+                "conditions": "is_going_to_store5",
+            },
+            # menu
+            {
+                "trigger": "advance",
+                "source": "store1",
+                "dest": "menu1",
+                "conditions": "watch_menu",
+            },
+            {
+                "trigger": "advance",
+                "source": "store2",
+                "dest": "menu2",
+                "conditions": "watch_menu",
+            },
+            {
+                "trigger": "advance",
+                "source": "store3",
+                "dest": "menu3",
+                "conditions": "watch_menu",
+            },
+            {
+                "trigger": "advance",
+                "source": "store4",
+                "dest": "menu4",
+                "conditions": "watch_menu",
+            },
+            {
+                "trigger": "advance",
+                "source": "store5",
+                "dest": "menu5",
+                "conditions": "watch_menu",
+            },
+            # search
+            {
+                "trigger": "advance",
+                "source": "store1",
+                "dest": "search1",
+                "conditions": "search_store",
+            },
+            {
+                "trigger": "advance",
+                "source": "store2",
+                "dest": "search2",
+                "conditions": "search_store",
+            },
+            {
+                "trigger": "advance",
+                "source": "store3",
+                "dest": "search3",
+                "conditions": "search_store",
+            },
+            {
+                "trigger": "advance",
+                "source": "store4",
+                "dest": "search4",
+                "conditions": "search_store",
+            },
+            {
+                "trigger": "advance",
+                "source": "store5",
+                "dest": "search5",
+                "conditions": "search_store",
+            },
+            # go back
+            {
+                "trigger": "advance",
+                "source": ["user", "store1", "store2", "store3", "store4", "store5", "store6", "draw"],
+                "dest": "user",
+                "conditions": "go_back",
+            },
+            {
+                "trigger": "advance",
+                "source": ["menu1", "search1"],
+                "dest": "store1",
+                "conditions": "go_back",
+            },
+            {
+                "trigger": "advance",
+                "source": ["menu2", "search2"],
+                "dest": "store2",
+                "conditions": "go_back",
+            },
+            {
+                "trigger": "advance",
+                "source": ["menu3", "search3"],
+                "dest": "store3",
+                "conditions": "go_back",
+            },
+            {
+                "trigger": "advance",
+                "source": ["menu4", "search4"],
+                "dest": "store4",
+                "conditions": "go_back",
+            },
+            {
+                "trigger": "advance",
+                "source": ["menu5", "search5"],
+                "dest": "store5",
+                "conditions": "go_back",
+            },
+        ],
+        initial="user",
+        auto_transitions=False,
+        show_conditions=True,    
+    )
+
+    img = machine.get_graph().draw("fsm.png", prog="dot", format="png")
+    img = img.save("fsm.jpg")
