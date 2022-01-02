@@ -42,6 +42,8 @@ ID:@552ofbhh (line ID搜尋)
 
 
 ## Finite State Machine
+![](https://i.imgur.com/YOKkp4V.jpg)
+
 
 ## Run Locally
 You can using `ngrok` as a proxy.
