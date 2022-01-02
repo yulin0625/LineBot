@@ -40,10 +40,8 @@ ID:@552ofbhh (line ID搜尋)
 #### 機器人將傳送該店的Google地圖搜尋結果
 ![](https://i.imgur.com/gKDASL3.jpg)
 
-
 ## Finite State Machine
-![](https://i.imgur.com/YOKkp4V.jpg)
-
+![](https://i.imgur.com/E31d0IF.jpg)
 
 ## Run Locally
 You can using `ngrok` as a proxy.
