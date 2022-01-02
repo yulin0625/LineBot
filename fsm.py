@@ -233,31 +233,31 @@ if __name__ == "__main__":
             # search
             {
                 "trigger": "advance",
-                "source": "store1",
+                "source": ["store1", "menu1"],
                 "dest": "search1",
                 "conditions": "search_store",
             },
             {
                 "trigger": "advance",
-                "source": "store2",
+                "source": ["store2", "menu2"],
                 "dest": "search2",
                 "conditions": "search_store",
             },
             {
                 "trigger": "advance",
-                "source": "store3",
+                "source": ["store3", "menu3"],
                 "dest": "search3",
                 "conditions": "search_store",
             },
             {
                 "trigger": "advance",
-                "source": "store4",
+                "source": ["store4", "menu4"],
                 "dest": "search4",
                 "conditions": "search_store",
             },
             {
                 "trigger": "advance",
-                "source": "store5",
+                "source": ["store5", "menu5"],
                 "dest": "search5",
                 "conditions": "search_store",
             },
@@ -301,8 +301,6 @@ if __name__ == "__main__":
         ],
         initial="user",
         auto_transitions=False,
-        show_conditions=True,    
+        show_conditions=True,
     )
-
     img = machine.get_graph().draw("fsm.png", prog="dot", format="png")
-    img = img.save("fsm.jpg")
