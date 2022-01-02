@@ -14,21 +14,145 @@ load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
     transitions=[
+        # drow lots
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+            "dest": "draw",
+            "conditions": "is_going_to_draw",
+        },
+        # goto store
+        {
+            "trigger": "advance",
+            "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+            "dest": "store1",
+            "conditions": "is_going_to_store1",
         },
         {
             "trigger": "advance",
-            "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+            "dest": "store2",
+            "conditions": "is_going_to_store2",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+            "dest": "store3",
+            "conditions": "is_going_to_store3",
+        },
+        {
+            "trigger": "advance",
+            "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+            "dest": "store4",
+            "conditions": "is_going_to_store4",
+        },
+        {
+            "trigger": "advance",
+            "source": ["user", "store1", "store2", "store3", "store4", "store5", "draw", "menu1", "menu2", "menu3", "menu4", "menu5", "search1", "search2", "search3", "search4", "search5"],
+            "dest": "store5",
+            "conditions": "is_going_to_store5",
+        },
+        # menu
+        {
+            "trigger": "advance",
+            "source": "store1",
+            "dest": "menu1",
+            "conditions": "watch_menu",
+        },
+        {
+            "trigger": "advance",
+            "source": "store2",
+            "dest": "menu2",
+            "conditions": "watch_menu",
+        },
+        {
+            "trigger": "advance",
+            "source": "store3",
+            "dest": "menu3",
+            "conditions": "watch_menu",
+        },
+        {
+            "trigger": "advance",
+            "source": "store4",
+            "dest": "menu4",
+            "conditions": "watch_menu",
+        },
+        {
+            "trigger": "advance",
+            "source": "store5",
+            "dest": "menu5",
+            "conditions": "watch_menu",
+        },
+        # search
+        {
+            "trigger": "advance",
+            "source": "store1",
+            "dest": "search1",
+            "conditions": "search_store",
+        },
+        {
+            "trigger": "advance",
+            "source": "store2",
+            "dest": "search2",
+            "conditions": "search_store",
+        },
+        {
+            "trigger": "advance",
+            "source": "store3",
+            "dest": "search3",
+            "conditions": "search_store",
+        },
+        {
+            "trigger": "advance",
+            "source": "store4",
+            "dest": "search4",
+            "conditions": "search_store",
+        },
+        {
+            "trigger": "advance",
+            "source": "store5",
+            "dest": "search5",
+            "conditions": "search_store",
+        },
+        # go back
+        {
+            "trigger": "advance",
+            "source": ["user", "store1", "store2", "store3", "store4", "store5", "store6", "draw"],
+            "dest": "user",
+            "conditions": "go_back",
+        },
+        {
+            "trigger": "advance",
+            "source": ["menu1", "search1"],
+            "dest": "store1",
+            "conditions": "go_back",
+        },
+        {
+            "trigger": "advance",
+            "source": ["menu2", "search2"],
+            "dest": "store2",
+            "conditions": "go_back",
+        },
+        {
+            "trigger": "advance",
+            "source": ["menu3", "search3"],
+            "dest": "store3",
+            "conditions": "go_back",
+        },
+        {
+            "trigger": "advance",
+            "source": ["menu4", "search4"],
+            "dest": "store4",
+            "conditions": "go_back",
+        },
+        {
+            "trigger": "advance",
+            "source": ["menu5", "search5"],
+            "dest": "store5",
+            "conditions": "go_back",
+        },
     ],
     initial="user",
     auto_transitions=False,
@@ -54,6 +178,7 @@ parser = WebhookParser(channel_secret)
 
 @app.route("/callback", methods=["POST"])
 def callback():
+    # get X-Line-Signature header value
     signature = request.headers["X-Line-Signature"]
     # get request body as text
     body = request.get_data(as_text=True)
@@ -104,7 +229,7 @@ def webhook_handler():
         print(f"REQUEST BODY: \n{body}")
         response = machine.advance(event)
         if response == False:
-            send_text_message(event.reply_token, "Not Entering any State")
+            send_text_message(event.reply_token, "請輸入正確指令")
 
     return "OK"
 
