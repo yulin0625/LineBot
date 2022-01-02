@@ -6,6 +6,7 @@ MarkupSafe==2.0.1
 Werkzeug==2.0.2
 click==8.0.3
 dataclasses==0.6
-flask==2.0.2
+Flask==2.0.2
 itsdangerous==2.0.1
 python-dotenv==0.19.2
+transitions==1.16.0
